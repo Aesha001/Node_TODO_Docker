@@ -18,6 +18,14 @@ pipeline {
             }
         }
 
+        stage("Owasp dependency check"){
+            steps{
+                dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'dc'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
+
+
         stage("sonar quality check"){
             steps{
                 timeout(time: 2, unit: "MINUTES"){
